@@ -98,4 +98,70 @@ def showMetrics(str_model,acc_train, acc_trainKN, acc_trainBC, acc_trainTC, acc_
     print("punto 4")
     print(TableMetrics.sort_values) 
     
+# 1. Entrenar 5 modelos con distintos algoritmos de Machine Learning
+
+def metrics(str_model, y_test, y_pred):
+    
+    print('')
+
+
+
+model = LogisticRegression()
+model, acc_validation, acc_test, y_pred, acc_train =  metricsTraining(model, x_train, x_test, y_train, y_test)
+matriz_confusion_lg, AUC, fpr_lg, tpr_lg  = matrizConfusionAuc(model, x_test, y_test, y_pred)
+
+matrizConfusion = confusion_matrix(y_test, y_pred)
+nameModel = 'Logistic Regression'
+Metrics = classification_report(y_test, y_pred)
+metrics('Logistic Regression', y_test, y_pred)
+
+
+
+model = KNeighborsClassifier(n_neighbors = 3)
+model, acc_validationKN, acc_testKN, y_pred, acc_trainKN = metricsTraining(model, x_train, x_test, y_train, y_test)
+matriz_confusion_knn, AUCKN, fpr_knn, tpr_knn  = matrizConfusionAuc(model, x_test, y_test, y_pred)
+
+matrizConfusionKN = confusion_matrix(y_test, y_pred)
+nameModelKN = 'KNeighbors Classifier'
+MetricsKN = classification_report(y_test, y_pred)
+metrics('KNeighbors Classifier', y_test, y_pred)
+
+
+
+model = AdaBoostClassifier(n_estimators=10)
+model, acc_validationBC, acc_testBC, y_pred, acc_trainBC = metricsTraining(model, x_train, x_test, y_train, y_test)
+matriz_confusion_ada, AUCBC, fpr_ada, tpr_ada  = matrizConfusionAuc(model, x_test, y_test, y_pred)
+
+matrizConfusionBC = confusion_matrix(y_test, y_pred)
+nameModelBC = 'AdaBoost Classifier'
+MetricsBC = classification_report(y_test, y_pred)
+metrics('AdaBoost Classifier', y_test, y_pred)
+
+
+
+model = DecisionTreeClassifier()
+model, acc_validationTC, acc_testTC, y_pred, acc_trainTC = metricsTraining(model, x_train, x_test, y_train, y_test)
+matriz_confusion_dc, AUCTC, fpr_dc, tpr_dc  = matrizConfusionAuc(model, x_test, y_test, y_pred)
+matrizConfusionTC = confusion_matrix(y_test, y_pred)
+nameModelTC = 'Decision Tree Classifier'
+MetricsTC = classification_report(y_test, y_pred)
+metrics('Decision Tree Classifier', y_test, y_pred)
+
+
+
+model = GaussianNB()
+model, acc_validationNB, acc_testNB, y_pred, acc_trainNB = metricsTraining(model, x_train, x_test, y_train, y_test)
+matriz_confusion_NB, AUCNB, fpr_NB, tpr_NB  = matrizConfusionAuc(model, x_test, y_test, y_pred)
+
+matrizConfusionNB = confusion_matrix(y_test, y_pred)
+nameModelNB = 'Gaussian Naive Bayes'
+MetricsNB = classification_report(y_test, y_pred)
+metrics('Gaussian Naive Bayes', y_test, y_pred)
+
+
+showMetrics('KNeighborns', acc_train, acc_trainKN, acc_trainBC, acc_trainTC, acc_trainNB, acc_validation, acc_validationKN, acc_validationBC, acc_validationTC, acc_validationNB, acc_test, acc_testKN, acc_testBC, acc_testTC, acc_testNB) 
+
+
+
+
 
